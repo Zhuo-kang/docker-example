@@ -9,12 +9,7 @@ RUN apt-get update && apt-get upgrade -y; \
     build-essential libssl-dev libffi-dev \
     python3-dev python3-pip \
     sudo vim git openssh-server curl \
-    htop iotop screen reptyr \
-    libproj-dev proj-data proj-bin libgeos-dev;
-
-# Nodejs source
-RUN curl -sL https://deb.nodesource.com/setup_12.x | bash - ; \
-    apt-get update && apt-get install -y nodejs;
+    htop iotop screen reptyr;
 
 # Add all user into sudoers
 RUN echo '%staff   ALL=(ALL:ALL) ALL' >> /etc/sudoers;
@@ -22,13 +17,7 @@ RUN echo '%staff   ALL=(ALL:ALL) ALL' >> /etc/sudoers;
 # Python package install
 COPY obspy/requirements.txt /tmp/
 RUN python3 -m pip install --upgrade pip; \
-    python3 -m pip install shapely numpy scipy matplotlib --no-binary shapely; \
     python3 -m pip --no-cache-dir install --upgrade --requirement /tmp/requirements.txt;
-
-# Jupyter Lab interactive plot
-RUN jupyter labextension install @jupyter-widgets/jupyterlab-manager --no-build; \
-    jupyter labextension install jupyter-matplotlib --no-build; \
-    jupyter lab build;
 
 # SSH login fix. Otherwise user is kicked off after login
 RUN mkdir /var/run/sshd; \
