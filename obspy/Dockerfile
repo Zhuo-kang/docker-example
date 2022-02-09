@@ -9,7 +9,7 @@ RUN apt-get update && apt-get upgrade -y; \
     build-essential libssl-dev libffi-dev \
     python3-dev python3-pip \
     sudo vim git openssh-server curl \
-    htop iotop screen reptyr;
+    htop iotop screen reptyr libsndfile1;
 
 # Add all user into sudoers
 RUN echo '%staff   ALL=(ALL:ALL) ALL' >> /etc/sudoers;
